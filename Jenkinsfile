@@ -16,12 +16,6 @@ pipeline {
             }
         }
 
-        stage('subir a aplicacao'){
-            steps{
-                bat 'php artisan serve'
-            }
-        }
-
         stage('Test') {
             steps {
                 bat 'php artisan test'
