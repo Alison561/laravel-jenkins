@@ -13,8 +13,6 @@ pipeline {
                 bat 'composer install'
                 // Instalar dependências do NPM
                 bat 'npm install'
-                // Construir os assets com o NPM
-                bat 'npm run prod'
             }
         }
     }
