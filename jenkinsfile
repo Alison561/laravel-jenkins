@@ -3,9 +3,7 @@ pipeline {
     stages{
         stage('build'){
             steps{
-                bat 'composer install'
-                bat 'npm install'
-                bat 'npm run prod'
+                bat 'composer -v'
             }
         }
     }
