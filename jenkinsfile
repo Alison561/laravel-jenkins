@@ -1,0 +1,12 @@
+pipeline {
+    agent any
+    stages{
+        stage('build'){
+            steps{
+                bat 'composer install'
+                bat 'npm install'
+                bat 'npm run prod'
+            }
+        }
+    }
+}
