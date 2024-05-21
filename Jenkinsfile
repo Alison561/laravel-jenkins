@@ -7,12 +7,18 @@ pipeline {
     }
 
     stages {
-        stage('Instalação de Dependências') {
+        stage('Build') {
             steps {
                 // Instalar dependências do Composer
                 bat 'composer install'
                 // Instalar dependências do NPM
                 bat 'npm install'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                bat 'php artisan test'
             }
         }
     }
