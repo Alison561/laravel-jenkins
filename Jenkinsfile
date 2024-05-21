@@ -24,8 +24,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                bat 'start /B php artisan serve --host=0.0.0.0 --port=8000'
-                sleep 5
+                bat 'php artisan test'
             }
         }
     }
