@@ -18,7 +18,7 @@ pipeline {
 
         stage('subir a aplicacao'){
             steps{
-                bat 'php artisan server'
+                bat 'php artisan serve'
             }
         }
 
