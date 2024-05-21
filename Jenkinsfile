@@ -10,11 +10,11 @@ pipeline {
         stage('Instalação de Dependências') {
             steps {
                 // Instalar dependências do Composer
-                sh 'composer install'
+                bat 'composer install'
                 // Instalar dependências do NPM
-                sh 'npm install'
+                bat 'npm install'
                 // Construir os assets com o NPM
-                sh 'npm run prod'
+                bat 'npm run prod'
             }
         }
     }
