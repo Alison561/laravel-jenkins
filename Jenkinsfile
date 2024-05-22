@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-        COMPOSER_HOME = "${WORKSPACE}/.composer"
         DB_CONNECTION = 'pgsql'
         DB_DATABASE = 'laravel_jenkins'
         DB_USERNAME = 'postgres'
@@ -32,7 +31,7 @@ pipeline {
 
         stage('Iniciar Servidor') {
             steps {
-                 bat 'start /B php artisan serve --host=0.0.0.0 --port=8000'
+                bat 'start /B php artisan serve --host=0.0.0.0 --port=8000'
                 sleep 15
             }
         }
@@ -41,6 +40,14 @@ pipeline {
             steps {
                  bat 'php artisan test'
             }
+        }
+    }
+    post {
+        success {
+            echo 'Pipeline executado com sucesso!'
+        }
+        failure {
+            echo 'Pipeline falhou.'
         }
     }
 }
