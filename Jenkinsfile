@@ -10,14 +10,6 @@ pipeline {
     }
 
     stages {
-        stage('Preparação') {
-            steps {
-                script {
-                    cleanWs()
-                }
-            }
-        }
-
         stage('Configuração do Ambiente') {
             steps {
                 bat 'copy .env.example .env'
