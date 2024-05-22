@@ -10,6 +10,13 @@ pipeline {
     }
 
     stages {
+        stage('Build') {
+            steps {
+                bat 'composer install'
+                bat 'npm install'
+                bat 'npm run build'
+            }
+        }
         stage('Configuração do Ambiente') {
             steps {
                 bat 'copy .env.example .env'
@@ -20,13 +27,6 @@ pipeline {
                    (Get-Content .env) -replace 'DB_USERNAME=.*', 'DB_USERNAME=$env:DB_USERNAME' | Set-Content .env
                    (Get-Content .env) -replace 'DB_PASSWORD=.*', 'DB_PASSWORD=$env:DB_PASSWORD' | Set-Content .env
                 '''
-            }
-        }
-
-        stage('Build') {
-            steps {
-                bat 'composer install'
-                bat 'npm install'
             }
         }
 
