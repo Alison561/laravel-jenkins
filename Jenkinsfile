@@ -2,23 +2,52 @@ pipeline {
     agent any
 
     environment {
-        // Variáveis de ambiente necessárias
         COMPOSER_HOME = "${WORKSPACE}/.composer"
+        DB_CONNECTION = 'pgsql'
+        DB_DATABASE = 'laravel_jenkins'
+        DB_USERNAME = 'postgres'
+        DB_PASSWORD = 'Swporte@01'
     }
 
     stages {
+        stage('Preparação') {
+            steps {
+                script {
+                    cleanWs()
+                }
+            }
+        }
+
+        stage('Configuração do Ambiente') {
+            steps {
+                bat 'copy .env.example .env'
+                bat 'php artisan key:generate'
+                powershell '''
+                   (Get-Content .env) -replace 'DB_CONNECTION=.*', 'DB_CONNECTION=$env:DB_CONNECTION' | Set-Content .env
+                   (Get-Content .env) -replace 'DB_DATABASE=.*', 'DB_DATABASE=$env:DB_DATABASE' | Set-Content .env
+                   (Get-Content .env) -replace 'DB_USERNAME=.*', 'DB_USERNAME=$env:DB_USERNAME' | Set-Content .env
+                   (Get-Content .env) -replace 'DB_PASSWORD=.*', 'DB_PASSWORD=$env:DB_PASSWORD' | Set-Content .env
+                '''
+            }
+        }
+
         stage('Build') {
             steps {
-                // Instalar dependências do Composer
                 bat 'composer install'
-                // Instalar dependências do NPM
                 bat 'npm install'
             }
         }
 
-        stage('Test') {
+        stage('Iniciar Servidor') {
             steps {
-                bat 'php artisan test'
+                 bat 'start /B php artisan serve --host=0.0.0.0 --port=8000'
+                sleep 15
+            }
+        }
+
+        stage('teste') {
+            steps {
+                 bat 'php artisan test'
             }
         }
     }
